@@ -28,21 +28,80 @@ public class ViewPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        registro_pacientes_btn = new javax.swing.JButton();
+        visualizacion_pacientes_btn = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Sistema de Triage ");
+
+        jLabel2.setText("Seleccione una acción:");
+
+        registro_pacientes_btn.setText("Registro de Pacientes");
+        registro_pacientes_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registro_pacientes_btnActionPerformed(evt);
+            }
+        });
+
+        visualizacion_pacientes_btn.setText("Visualización de Pacientes");
+        visualizacion_pacientes_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visualizacion_pacientes_btnActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("jLabel3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(registro_pacientes_btn)
+                            .addComponent(jLabel2)
+                            .addComponent(visualizacion_pacientes_btn)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(284, 284, 284)
+                        .addComponent(jLabel1)))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel1)
+                .addGap(79, 79, 79)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(55, 55, 55)
+                        .addComponent(registro_pacientes_btn)
+                        .addGap(43, 43, 43)
+                        .addComponent(visualizacion_pacientes_btn))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void visualizacion_pacientes_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizacion_pacientes_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_visualizacion_pacientes_btnActionPerformed
+
+    private void registro_pacientes_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registro_pacientes_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registro_pacientes_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +129,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton registro_pacientes_btn;
+    private javax.swing.JButton visualizacion_pacientes_btn;
     // End of variables declaration//GEN-END:variables
 }
