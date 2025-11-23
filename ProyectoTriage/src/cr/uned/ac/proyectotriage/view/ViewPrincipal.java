@@ -6,7 +6,6 @@ package cr.uned.ac.proyectotriage.view;
 
 /**
  *
- * @author micha
  */
 public class ViewPrincipal extends javax.swing.JFrame {
     
@@ -101,6 +100,14 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
     private void registro_pacientes_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registro_pacientes_btnActionPerformed
         // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                RegistroPacientes vistaRegPacientes = new RegistroPacientes();
+                vistaRegPacientes.setVisible(true);
+                vistaRegPacientes.setLocationRelativeTo(null); //centra la ventana 
+                vistaRegPacientes.setResizable(false);
+            }
+          });
     }//GEN-LAST:event_registro_pacientes_btnActionPerformed
 
     /**
