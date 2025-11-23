@@ -96,6 +96,14 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
     private void visualizacion_pacientes_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizacion_pacientes_btnActionPerformed
         // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                VisualizacionPacientes vistaVisPacientes = new VisualizacionPacientes();
+                vistaVisPacientes.setVisible(true);
+                vistaVisPacientes.setLocationRelativeTo(null); //centra la ventana 
+                vistaVisPacientes.setResizable(false);
+            }
+          });
     }//GEN-LAST:event_visualizacion_pacientes_btnActionPerformed
 
     private void registro_pacientes_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registro_pacientes_btnActionPerformed
