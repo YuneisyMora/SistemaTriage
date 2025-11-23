@@ -6,7 +6,6 @@ package cr.uned.ac.proyectotriage.view;
 
 /**
  *
- * @author micha
  */
 public class VisualizacionPacientes extends javax.swing.JFrame {
     
@@ -37,7 +36,7 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
         actualizar_btn = new javax.swing.JButton();
         eliminar_btn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Visualización de Pacientes");
 
@@ -52,15 +51,23 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre Completo", "Edad", "Motivo", "Temperatura (°C) ", "Frequencia (lpm) ", "Dolor", "Clasificación"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         actualizar_btn.setText("Actualizar");

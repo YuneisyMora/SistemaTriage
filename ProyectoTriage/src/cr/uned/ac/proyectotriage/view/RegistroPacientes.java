@@ -4,9 +4,14 @@
  */
 package cr.uned.ac.proyectotriage.view;
 
+import cr.uned.ac.proyectotriage.dao.PacienteDAO;
+import cr.uned.ac.proyectotriage.dominio.Paciente;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author micha
+ * 
  */
 public class RegistroPacientes extends javax.swing.JFrame {
     
@@ -156,6 +161,74 @@ public class RegistroPacientes extends javax.swing.JFrame {
 
     private void registar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registar_btnActionPerformed
         // TODO add your handling code here:
+        
+        
+        
+        String nombre_completo = nombre_completo_txtf.getText().trim(); // se obtiene el string del campo de texto de nombre completo
+        
+        String edad = edad_txtf.getText().trim(); // se obtiene el string del campo de texto de edad
+        
+        String motivo_consulta = consulta_txta.getText().trim(); // se obtiene el string del text area 
+        
+        String temperatura = temp_txtf.getText().trim();
+        
+        String frequencia = freq_txtf.getText().trim();
+        
+        if(nombre_completo.isEmpty() || edad.isEmpty() ||  motivo_consulta.isEmpty() || temperatura.isEmpty() || frequencia.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Error al registrar un nuevo paciente, revise que los campos esten debidamente completos", "Registro Paciente", JOptionPane.ERROR_MESSAGE);
+        }else{
+            
+            int edad_paciente = Integer.parseInt(edad); // se convierte el string en un número entero para poder ser guardado por el DAO
+        
+            double temperatura_paciente = Double.parseDouble(temperatura); // se convierte el string de temperatura en un número decimal para ser guardado por el DAO
+
+            double frequencia_paciente = Double.parseDouble(frequencia); // se convierte el string de frequencia en un número entero decimal para ser guardado por el dao
+
+            int nivel_dolor = nivel_dolor_slider.getValue();
+
+            
+            
+            if(edad_paciente<0 || temperatura_paciente > 45){
+                JOptionPane.showMessageDialog(this, "Error al registrar un nuevo paciente, edad no puede ser negativa, ni fiebre puede ser mayor a 45 °C", "Registro Paciente", JOptionPane.ERROR_MESSAGE);
+            }else{
+                String clasificacion = "";
+                String color = "";
+
+                if(nivel_dolor >= 8 || frequencia_paciente >= 120 || temperatura_paciente >= 39.0 ){
+                    clasificacion = "Emergencia";
+                    color = "Rojo";
+                }else if((nivel_dolor >= 5 &&  nivel_dolor <= 7) || (frequencia_paciente >= 100 &&  frequencia_paciente <= 119) || (temperatura_paciente >= 37.5 && temperatura_paciente <= 38.9 )){
+                    clasificacion = "Atención Prioritaria";
+                    color = "Amarillo";
+                }else{
+                    clasificacion = "Atención Normal";
+                    color = "Verde";
+                }
+
+                Paciente nuevo_paciente = new Paciente(nombre_completo, edad_paciente, motivo_consulta, temperatura_paciente, frequencia_paciente, nivel_dolor, clasificacion,color);
+
+                PacienteDAO pacienteDAO = new PacienteDAO();
+                try {
+                    pacienteDAO.insertarPaciente(nuevo_paciente);
+                    JOptionPane.showMessageDialog(this, "Paciente registrado con exito!", "Registro Paciente", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al registrar un nuevo paciente, intente de nuevo", "Registro Paciente", JOptionPane.ERROR_MESSAGE);
+                }
+
+                nombre_completo_txtf.setText("");
+                edad_txtf.setText("");
+                consulta_txta.setText("");
+                temp_txtf.setText("");
+                freq_txtf.setText("");
+                nivel_dolor_slider.setValue(1);
+                }
+
+        }
+        
+        
+        
     }//GEN-LAST:event_registar_btnActionPerformed
 
     /**
