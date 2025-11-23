@@ -76,5 +76,65 @@ public class PacienteDAO {
         
         return listaPacientes;
     }
+    
+        public ArrayList<Paciente> buscarPacientesPorNombre(String nombreBusqueda) throws SQLException {
+        ArrayList<Paciente> lista = new ArrayList<>();
+
+        
+        String sql = "SELECT * FROM paciente WHERE LOWER(nombre_completo) LIKE ?";
+
+        PreparedStatement pst = con.prepareCall(sql);
+        pst.setString(1, "%" + nombreBusqueda.toLowerCase() + "%");
+
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            Paciente p = new Paciente();
+
+            p.setId(rs.getInt("id"));
+            p.setNombre_completo(rs.getString("nombre_completo"));
+            p.setEdad(rs.getInt("edad"));
+            p.setMotivo_consulta(rs.getString("motivo_consulta"));
+            p.setTemperatura_corp(rs.getDouble("temperatura_corp"));
+            p.setFreq_card(rs.getDouble("freq_card"));
+            p.setNivel_dolor(rs.getInt("nivel_dolor"));
+            p.setClasificacion(rs.getString("clasificacion"));
+            p.setColor(rs.getString("color"));
+
+            lista.add(p);
+        }
+
+        return lista;
+    }
+        
+        public void actualizarPaciente(Paciente p) throws SQLException {
+        String sql = "UPDATE paciente SET nombre_completo=?, edad=?, motivo_consulta=?, temperatura_corp=?, freq_card=?, nivel_dolor=?, clasificacion=?, color=? WHERE id=?";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setString(1, p.getNombre_completo());
+        pst.setInt(2, p.getEdad());
+        pst.setString(3, p.getMotivo_consulta());
+        pst.setDouble(4, p.getTemperatura_corp());
+        pst.setDouble(5, p.getFreq_card());
+        pst.setInt(6, p.getNivel_dolor());
+        pst.setString(7, p.getClasificacion());
+        pst.setString(8, p.getColor());
+        pst.setInt(9, p.getId());
+
+        pst.executeUpdate();
+    }
+        
+        public void eliminarPaciente(int idPaciente) throws SQLException {
+        String sql = "DELETE FROM paciente WHERE id = ?";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, idPaciente);
+
+        pst.executeUpdate();
+    }
+
+
+
 }
 

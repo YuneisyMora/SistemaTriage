@@ -4,6 +4,14 @@
  */
 package cr.uned.ac.proyectotriage.view;
 
+import cr.uned.ac.proyectotriage.dao.PacienteDAO;
+import cr.uned.ac.proyectotriage.dominio.ColorizadorCelda;
+import cr.uned.ac.proyectotriage.dominio.Paciente;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  */
@@ -16,6 +24,36 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
      */
     public VisualizacionPacientes() {
         initComponents();
+        
+        PacienteDAO pacienteDAO = new PacienteDAO();
+        
+        ArrayList<Paciente> lista_pacientes = new ArrayList<Paciente>();
+        try{
+            lista_pacientes = pacienteDAO.obtenerPacientes();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.setRowCount(0);
+        
+        for (Paciente p : lista_pacientes) {
+        Object[] fila = new Object[] {
+            p.getId(),                  
+            p.getNombre_completo(),     
+            p.getEdad(),                
+            p.getMotivo_consulta(),     
+            p.getTemperatura_corp(),    
+            p.getFreq_card(),          
+            p.getNivel_dolor(),        
+            p.getClasificacion(), 
+            p.getColor()
+        };
+        model.addRow(fila);
+        
+        
+        }
+        tabla.getColumnModel().getColumn(8).setCellRenderer(new ColorizadorCelda());
     }
 
     /**
@@ -32,9 +70,10 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
         buscar_txtf = new javax.swing.JTextField();
         buscar_btn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         actualizar_btn = new javax.swing.JButton();
         eliminar_btn = new javax.swing.JButton();
+        cargar_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -49,26 +88,26 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre Completo", "Edad", "Motivo", "Temperatura (°C) ", "Frequencia (lpm) ", "Dolor", "Clasificación"
+                "ID", "Nombre Completo", "Edad", "Motivo", "Temperatura (°C) ", "Frequencia (lpm) ", "Dolor", "Clasificación", "Color"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
 
         actualizar_btn.setText("Actualizar");
         actualizar_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +117,18 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
         });
 
         eliminar_btn.setText("Eliminar");
+        eliminar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminar_btnActionPerformed(evt);
+            }
+        });
+
+        cargar_btn.setText("Volver a cargar registros");
+        cargar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargar_btnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,35 +137,39 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(502, 502, 502)
+                        .addComponent(actualizar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(eliminar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(186, 186, 186)
                         .addComponent(jLabel2)
-                        .addGap(37, 37, 37)
-                        .addComponent(buscar_txtf, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(buscar_btn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 932, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(434, 434, 434)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(394, 394, 394)
-                        .addComponent(actualizar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(eliminar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(buscar_txtf, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(91, 91, 91)
+                        .addComponent(buscar_btn)
+                        .addGap(66, 66, 66)
+                        .addComponent(cargar_btn)))
+                .addContainerGap(43, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(525, 525, 525))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(buscar_txtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buscar_btn))
+                    .addComponent(buscar_btn)
+                    .addComponent(cargar_btn))
                 .addGap(38, 38, 38)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
@@ -129,11 +184,106 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
 
     private void buscar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_btnActionPerformed
         // TODO add your handling code here:
+        String busqueda = buscar_txtf.getText().trim();
+        PacienteDAO pacienteDAO = new PacienteDAO();
+        ArrayList<Paciente> lista_resultado = new ArrayList<Paciente>();
+        try {
+            lista_resultado = pacienteDAO.buscarPacientesPorNombre(busqueda);
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.setRowCount(0);
+        
+        for (Paciente p : lista_resultado) {
+        Object[] fila = new Object[] {
+            p.getId(),                  
+            p.getNombre_completo(),     
+            p.getEdad(),                
+            p.getMotivo_consulta(),     
+            p.getTemperatura_corp(),    
+            p.getFreq_card(),          
+            p.getNivel_dolor(),        
+            p.getClasificacion(), 
+            p.getColor()
+        };
+        model.addRow(fila);
+        } 
+        tabla.getColumnModel().getColumn(8).setCellRenderer(new ColorizadorCelda());
+        
     }//GEN-LAST:event_buscar_btnActionPerformed
 
     private void actualizar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizar_btnActionPerformed
         // TODO add your handling code here:
+        int fila_actualizar = tabla.getSelectedRow();
+        
+        if (fila_actualizar == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila primero para poder actualizar al paciente", "Visualización Pacientes", JOptionPane.ERROR_MESSAGE);
+            return;
+        }else{
+            int id = Integer.parseInt(tabla.getValueAt(fila_actualizar, 0).toString());
+            String nombre_completo = tabla.getValueAt(fila_actualizar, 1).toString();
+            int edad = Integer.parseInt(tabla.getValueAt(fila_actualizar, 2).toString());
+            String motivo = tabla.getValueAt(fila_actualizar, 3).toString();
+            double temp = Double.parseDouble(tabla.getValueAt(fila_actualizar, 4).toString());
+            double freq = Double.parseDouble(tabla.getValueAt(fila_actualizar, 5).toString());
+            int dolor = Integer.parseInt(tabla.getValueAt(fila_actualizar, 6).toString());
+        
+            Paciente paciente_actualizar = new Paciente(id, nombre_completo, edad, motivo, temp, freq, dolor, "", "");
+            
+            java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ActualizarPacientes vistaActualizar = new ActualizarPacientes(paciente_actualizar);
+                vistaActualizar.setVisible(true);
+                vistaActualizar.setLocationRelativeTo(null); //centra la ventana 
+                vistaActualizar.setResizable(false);
+            }
+        });
+
+        }
+        
+        
+        
     }//GEN-LAST:event_actualizar_btnActionPerformed
+
+    private void eliminar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eliminar_btnActionPerformed
+
+    private void cargar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargar_btnActionPerformed
+        // TODO add your handling code here:
+        PacienteDAO pacienteDAO = new PacienteDAO();
+        
+        ArrayList<Paciente> lista_pacientes = new ArrayList<Paciente>();
+        try{
+            lista_pacientes = pacienteDAO.obtenerPacientes();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.setRowCount(0);
+        
+        for (Paciente p : lista_pacientes) {
+        Object[] fila = new Object[] {
+            p.getId(),                  
+            p.getNombre_completo(),     
+            p.getEdad(),                
+            p.getMotivo_consulta(),     
+            p.getTemperatura_corp(),    
+            p.getFreq_card(),          
+            p.getNivel_dolor(),        
+            p.getClasificacion(), 
+            p.getColor()
+        };
+        model.addRow(fila);
+        
+        
+        }
+        tabla.getColumnModel().getColumn(8).setCellRenderer(new ColorizadorCelda());
+    }//GEN-LAST:event_cargar_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,10 +314,11 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
     private javax.swing.JButton actualizar_btn;
     private javax.swing.JButton buscar_btn;
     private javax.swing.JTextField buscar_txtf;
+    private javax.swing.JButton cargar_btn;
     private javax.swing.JButton eliminar_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
