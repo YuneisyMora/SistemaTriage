@@ -220,7 +220,7 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
         int fila_actualizar = tabla.getSelectedRow();
         
         if (fila_actualizar == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila primero para poder actualizar al paciente", "Visualización Pacientes", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Seleccione un paciente primero para poder actualizar al paciente", "Visualización Pacientes", JOptionPane.ERROR_MESSAGE);
             return;
         }else{
             int id = Integer.parseInt(tabla.getValueAt(fila_actualizar, 0).toString());
@@ -250,6 +250,27 @@ public class VisualizacionPacientes extends javax.swing.JFrame {
 
     private void eliminar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar_btnActionPerformed
         // TODO add your handling code here:
+        int fila_eliminar = tabla.getSelectedRow();
+        
+        if (fila_eliminar == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un paciente primero para poder eliminarse", "Visualización Pacientes", JOptionPane.ERROR_MESSAGE);
+            return;
+        }else{
+            int id = Integer.parseInt(tabla.getValueAt(fila_eliminar, 0).toString());
+            int confirmacion = JOptionPane.showConfirmDialog(this,"Esta seguro que desea eliminar el paciente","Confirmación de Eliminación",JOptionPane.YES_NO_OPTION);
+            if(confirmacion == JOptionPane.YES_OPTION){
+                PacienteDAO pacienteDAO = new PacienteDAO();
+                try {
+                    pacienteDAO.eliminarPaciente(id);
+                    JOptionPane.showMessageDialog(this, "Paciente eliminado con exito!", "Eliminación de Paciente", JOptionPane.INFORMATION_MESSAGE);
+
+                    
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Hubo un error al eliminar el paciente, intente de nuevo", "Eliminación de Paciente", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_eliminar_btnActionPerformed
 
     private void cargar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargar_btnActionPerformed

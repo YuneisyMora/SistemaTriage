@@ -4,6 +4,15 @@
  */
 package cr.uned.ac.proyectotriage.view;
 
+import cr.uned.ac.proyectotriage.view.RegistroPacientes;
+import cr.uned.ac.proyectotriage.view.VisualizacionPacientes;
+import java.awt.Container;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  */
@@ -16,7 +25,45 @@ public class ViewPrincipal extends javax.swing.JFrame {
      */
     public ViewPrincipal() {
         initComponents();
+        
+        URL url = getClass().getResource("/cr/uned/ac/proyectotriage/recursos/triage.png"); //se trae la ruta de la imagen para la vista principal
+ 
+        initComponents();//inicializa los componentes del formulario 
+        ImageIcon label_icon = new ImageIcon(getClass().getResource("/cr/uned/ac/proyectotriage/recursos/triage.png"));
+        Image scaledImage = label_icon.getImage().getScaledInstance(
+        icon_lbl.getWidth(), 
+        icon_lbl.getHeight(), 
+        Image.SCALE_SMOOTH
+    );// obtiene la información de la imagen, le da nuevo tamaño a la imagen y pone la imagen en un label 
+        
+        icon_lbl.setIcon(new ImageIcon(scaledImage)); //pone la imagen en el label de vista login
+    
+        
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent e) {
+            confirmarSalida();
+        }
+        });
     }
+    
+    
+    public void confirmarSalida() {
+        int choice = JOptionPane.showConfirmDialog(
+            this,
+            "Esta seguro de que quiere salir del programa?",
+            "Confirmación de Salida",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (choice == JOptionPane.YES_OPTION) {
+            System.exit(0); 
+        }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,7 +78,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         registro_pacientes_btn = new javax.swing.JButton();
         visualizacion_pacientes_btn = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        icon_lbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,8 +100,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("jLabel3");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,32 +108,32 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
+                        .addComponent(icon_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(registro_pacientes_btn)
                             .addComponent(jLabel2)
                             .addComponent(visualizacion_pacientes_btn)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(284, 284, 284)
+                        .addGap(319, 319, 319)
                         .addComponent(jLabel1)))
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(47, 47, 47)
                 .addComponent(jLabel1)
-                .addGap(79, 79, 79)
+                .addGap(74, 74, 74)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(55, 55, 55)
+                        .addGap(53, 53, 53)
                         .addComponent(registro_pacientes_btn)
-                        .addGap(43, 43, 43)
+                        .addGap(40, 40, 40)
                         .addComponent(visualizacion_pacientes_btn))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                    .addComponent(icon_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         pack();
@@ -144,9 +189,9 @@ public class ViewPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel icon_lbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton registro_pacientes_btn;
     private javax.swing.JButton visualizacion_pacientes_btn;
     // End of variables declaration//GEN-END:variables

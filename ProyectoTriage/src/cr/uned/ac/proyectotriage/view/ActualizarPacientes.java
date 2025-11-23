@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author micha
  */
 public class ActualizarPacientes extends javax.swing.JFrame {
     
